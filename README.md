@@ -84,9 +84,13 @@ Notes: There will be several additional files in the my-project directory that t
    ```
 3. You should see the text "Hello World!" appear in the Expo app on your phone or emulator through live reloading.
 
+![](/images/hello_world.png)
+
 ### Styling
 
-1. Let's take a look at the following code:
+It's a little bland right now. Let's add some styling to make it look a little nicer.
+
+1. First, let's take a look at the following code:
 
    ```jsx
    const styles = StyleSheet.create({
