@@ -111,7 +111,7 @@ Notes: Flexbox is a layout system that allows you to easily position elements in
 
 ### Components
 
-1. Now let's create a component. These are like lego blocks that you can use to build your application. Let's create a button component.
+1. Now let's create a component in a new `components/` folder named `button.component.jsx`. These are like lego blocks that you can use to build your application. Let's create a button component.
 
 ```jsx
 import { TouchableOpacity, Text } from 'react-native';
@@ -123,7 +123,98 @@ const Button = () => {
     </TouchableOpacity>
   );
 };
+
+export default Button;
 ```
+
+2. Export the Button component from App.js and import it into App.js. You should see the button appear in the Expo app on your phone or emulator.
+
+```jsx
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Hello world!</Text>
+      <Button />
+      <StatusBar style='auto' />
+    </View>
+  );
+}
+```
+
+3. Although, the button works, we can't customize it as there are no properties that we can pass into the component. Let's some props, namely title, onPress, and style. This will allow us to dynamically change the title, onPress function, and style of the button.
+
+```jsx
+const Button = (props) => {
+  return (
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={props.style}>
+      <Text>{props.title}</Text>
+    </TouchableOpacity>
+  );
+};
+```
+
+4. Now, we can customize the button in App.js.
+
+```jsx
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Hello world!</Text>
+      <Button
+        title='Click Me!'
+        onPress={() => console.log('Button Pressed!')}
+        style={styles.button}
+      />
+      <StatusBar style='auto' />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: '#ccc',
+    padding: 10,
+    borderRadius: 15,
+    margin: 10,
+  },
+});
+```
+
+5. Now, let's make a counter that tracks the number of times the button is pressed. First, let's create a state variable, count, using the useState hook and display that in the text component. The useState hook takes in an initial value and returns a state variable and a function to update the state variable. We can use the state variable to keep track of the count and the function to update the count. Whenever, a state is updated, the component is re-rendered, meaning that the component is rendered again with the updated state.
+
+```jsx
+// Add this import
+import { useState } from 'react';
+
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <View style={styles.container}>
+      <Text>{count} clicks</Text>
+      <Button
+        title='Click Me!'
+        onPress={() => {
+          setCount(count + 1);
+          console.log('Button Pressed!');
+        }}
+        style={styles.button}
+      />
+      <StatusBar style='auto' />
+    </View>
+  );
+}
+```
+
+![](/images/button_counter.png)
 
 ### License
 
@@ -136,3 +227,7 @@ HackPacks are built by the [TreeHacks](https://www.treehacks.com/) team and cont
 If you're interested in attending TreeHacks, you can apply on our [website](https://www.treehacks.com/) during the application period.
 
 You can follow us here on [GitHub](https://github.com/treehacks) to see all the open source work we do (we love issues, contributions, and feedback of any kind!), and on [Facebook](https://facebook.com/treehacks), [Twitter](https://twitter.com/hackwithtrees), and [Instagram](https://instagram.com/hackwithtrees) to see general updates from TreeHacks.
+
+```
+
+```
