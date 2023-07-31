@@ -54,29 +54,29 @@ Notes: There will be several additional files in the my-project directory that t
 
 1. Open the App.js file in your text editor of choice. You should see the following code:
 
-   ```jsx
-   import { StatusBar } from 'expo-status-bar';
-   import React from 'react';
-   import { StyleSheet, Text, View } from 'react-native';
+```jsx
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-   export default function App() {
-     return (
-       <View style={styles.container}>
-         <Text>Open up App.js to start working on your app!</Text>
-         <StatusBar style='auto' />
-       </View>
-     );
-   }
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar style='auto' />
+    </View>
+  );
+}
 
-   const styles = StyleSheet.create({
-     container: {
-       flex: 1,
-       backgroundColor: '#fff',
-       alignItems: 'center',
-       justifyContent: 'center',
-     },
-   });
-   ```
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+```
 
 2. Replace the Text component with the following:
    ```
@@ -84,7 +84,7 @@ Notes: There will be several additional files in the my-project directory that t
    ```
 3. You should see the text "Hello World!" appear in the Expo app on your phone or emulator through live reloading.
 
-![](/images/hello_world.png)
+![](/hackpack-assets/hello_world.png)
 
 ### Styling
 
@@ -92,18 +92,18 @@ It's a little bland right now. Let's add some styling to make it look a little n
 
 1. First, let's take a look at the following code:
 
-   ```jsx
-   const styles = StyleSheet.create({
-     container: {
-       flex: 1,
-       backgroundColor: '#fff',
-       alignItems: 'center',
-       justifyContent: 'center',
-     },
-   });
-   ```
+```jsx
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+```
 
-   The styles object contains a number of properties that describe how a component should be styled. Each property contains a number of key-value pairs. The key is the name of the style property aka the class, and the value is the value of the style property. For example, the backgroundColor property sets the background color of the component. The value of the backgroundColor property is '#fff', which is a hex code that represents white. Notice how these properties are camelCased versions of CSS properties.
+The styles object contains a number of properties that describe how a component should be styled. Each property contains a number of key-value pairs. The key is the name of the style property aka the class, and the value is the value of the style property. For example, the backgroundColor property sets the background color of the component. The value of the backgroundColor property is '#fff', which is a hex code that represents white. Notice how these properties are camelCased versions of CSS properties.
 
 2. Let's change the background color of the container to blue. Change the backgroundColor property to '#0000ff'. You should see the background color of the container change to blue.
 
@@ -214,9 +214,201 @@ export default function App() {
 }
 ```
 
-![](/images/button_counter.png)
+![](/hackpack-assets/button_counter.png)
 
+### Screens
 
+1. Now that we have a component, let's move on to screens. Screens are components that are like pages in a website. We can use the Button component that we created earlier in a screen. We can manage screens and navigating between them using React Navigation. Let's install React Navigation.
+
+```bash
+npm install @react-navigation/native @react-navigation/native-stack
+```
+
+2. Now, let's create a new screen in a new `screens/` folder named `home.screen.jsx`. This will be the home screen of our app. Let's create a home screen component. Note, that we are using the StatusBar component from Expo to set the status bar style (light or dark) so that it is visible on the screen.
+
+```jsx
+import { View, Text, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+
+const HomeScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Home Screen</Text>
+      <StatusBar style='auto' />
+    </View>
+  );
+};
+
+export default HomeScreen;
+
+const styles = StyleSheet.create({
+  // Styles
+});
+```
+
+3. In App.js, let's define the navigation stack. The navigation stack is a stack of screens that we can navigate between. We can use the createStackNavigator function to create a stack navigator. The createStackNavigator function takes in a configuration object that contains the screens in the stack. We can use the component property to specify the component to render for each screen. We can also use the options property to specify the title of the screen.
+
+```jsx
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// Add this import
+import HomeScreen from './screens/home.screen';
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name='Home'
+          component={HomeScreen}
+          options={{ title: 'Home' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+4. We can also add a button to the home screen. Let's add a button to the home screen. Notice that we can pass in the navigation prop to the component. This allows us to navigate to other screens. We can use the navigate function to navigate to a screen. The navigate function takes in the name of the screen to navigate to, as defined in the createStackNavigator function. In this case, we can navigate to the Details screen by passing in 'Details' as the first argument to the navigate function.
+
+```jsx
+import { View, Text, StyleSheet } from 'react-native';
+
+import Button from '../components/button.component';
+
+const HomeScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <Text>Home Screen</Text>
+      <Button
+        title='Go to Details'
+        onPress={() => navigation.navigate('Details')}
+        style={styles.button}
+      />
+    </View>
+  );
+};
+```
+
+5. Now, let's create a details screen. Let's create a new screen in a new `screens/` folder named `details.screen.jsx`. This will be the details screen of our app. Let's create a details screen component.
+
+```jsx
+import { View, Text, StyleSheet } from 'react-native';
+
+const DetailsScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Details Screen</Text>
+    </View>
+  );
+};
+
+export default DetailsScreen;
+
+const styles = StyleSheet.create({
+  // Styles
+});
+```
+
+6. In App.js, let's add the Details screen to the navigation stack and define the initial route to be the Home screen. Make sure to reload the app to update the navigation stack.
+
+```jsx
+import DetailsScreen from './screens/details.screen';
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Home'>
+        <Stack.Screen
+          name='Home'
+          component={HomeScreen}
+          options={{ title: 'Home' }}
+        />
+        <Stack.Screen
+          name='Details'
+          component={DetailsScreen}
+          options={{ title: 'Details' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+7. Now, we can navigate between the home screen and the details screen. However, we want to be able to go back to the home screen from the details screen. We can do this by adding a button to the details screen.
+
+```jsx
+import Button from '../components/button.component';
+
+const DetailsScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <Text>Details Screen</Text>
+      <Button
+        title='Go back'
+        onPress={() => navigation.goBack()}
+        style={styles.button}
+      />
+    </View>
+  );
+};
+```
+
+![](/hackpack-assets/navigation.gif)
+
+### Lists
+
+1. Now, let's create a list of items. Let's create a new component in a new `components/` folder named `list-item.component.jsx`. This will be the list item component of our app. Let's create a list item component.
+
+```jsx
+import { View, Text, StyleSheet } from 'react-native';
+
+const ListItem = ({ title }) => {
+  return (
+    <View style={styles.container}>
+      <Text>{title}</Text>
+    </View>
+  );
+};
+
+export default ListItem;
+```
+
+2. Now, let's use the list item component in the home screen. Let's create a list of items and map over the list to render the list items. Note, that we are using the key prop to specify a unique key for each list item. This is required by React to keep track of the list items.
+
+```jsx
+import ListItem from '../components/list-item.component';
+
+const HomeScreen = ({ navigation }) => {
+  const list = ['Item 1', 'Item 2', 'Item 3'];
+
+  return (
+    <View style={styles.container}>
+      <Text>Home Screen</Text>
+      {list.map((item, index) => (
+        <ListItem
+          title={item}
+          key={index}
+        />
+      ))}
+      <Button
+        title='Go to Details'
+        onPress={() => navigation.navigate('Details')}
+        style={styles.button}
+      />
+    </View>
+  );
+};
+```
+
+# Congratulations! 🎉
+
+You've finished the react-native hackpack! Now, you can build your own react-native apps!
 
 ### License
 
