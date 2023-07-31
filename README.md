@@ -449,7 +449,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-2. Now, let's use the post component in the home screen. Let's fetch posts from the [JSON Placeholder API](https://jsonplaceholder.typicode.com/). We can use the `fetch` function to fetch data from a server. We can use the `then` function to get the response from the server. We can use the `json` function to convert the response to a JSON object. We can use the `catch` function to catch any errors. Note, that we are using the `useEffect` hook to fetch the data when the component mounts. `useEffect` is used to perform side effects in a component, in otherwords, react to changes in the component through states or props.
+2. Now, let's use the post component in the home screen. Let's fetch posts from the [JSON Placeholder API](https://jsonplaceholder.typicode.com/). We can use the `fetch` function to fetch data from a server. We can use the `then` function to get the response from the server. We can use the `json` function to convert the response to a JSON object. We can use the `catch` function to catch any errors. Note, that we are using the `useEffect` hook to fetch the data when the component mounts. `useEffect` is used to perform side effects in a component, in other words, react to changes in the component through states or props.
 
 ```jsx
 import { useState, useEffect } from 'react';
