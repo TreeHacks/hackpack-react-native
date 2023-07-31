@@ -377,6 +377,10 @@ const ListItem = ({ title }) => {
 };
 
 export default ListItem;
+
+const styles = StyleSheet.create({
+  // Styles
+});
 ```
 
 2. Now, let's use the list item component in the home screen. Let's create a list of items and map over the list to render the list items. Note, that we are using the key prop to specify a unique key for each list item. This is required by React to keep track of the list items.
@@ -396,15 +400,84 @@ const HomeScreen = ({ navigation }) => {
           key={index}
         />
       ))}
-      <Button
-        title='Go to Details'
-        onPress={() => navigation.navigate('Details')}
-        style={styles.button}
+    </View>
+  );
+};
+```
+
+3. What if the `ListItem` is too large to fit on the screen? We can use the `Flatlist` component to render a list of items. The `Flatlist` component takes in a configuration object that contains the list of items to render. We can use the data property to specify the list of items to render. We can also use the renderItem property to specify the component to render for each item. We can also use the keyExtractor property to specify a unique key for each item.
+
+```jsx
+import { FlatList } from 'react-native';
+
+const HomeScreen = ({ navigation }) => {
+  const list = ['Item 1', 'Item 2', 'Item 3'];
+
+  return (
+    <View style={styles.container}>
+      <Text>Home Screen</Text>
+      <FlatList
+        data={list}
+        renderItem={({ item }) => <ListItem title={item} />}
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );
 };
 ```
+
+### Networking
+
+1. Now, let's fetch data from a server. Let's create a new component in a new `components/` folder named `post.component.jsx`. This will be the post component of our app. Let's create a post component.
+
+```jsx
+import { View, Text, StyleSheet } from 'react-native';
+
+const Post = ({ title, body }) => {
+  return (
+    <View style={styles.container}>
+      <Text>{title}</Text>
+      <Text>{body}</Text>
+    </View>
+  );
+};
+
+export default Post;
+
+const styles = StyleSheet.create({
+  // Styles
+});
+```
+
+2. Now, let's use the post component in the home screen. Let's fetch posts from the [JSON Placeholder API](https://jsonplaceholder.typicode.com/). We can use the `fetch` function to fetch data from a server. We can use the `then` function to get the response from the server. We can use the `json` function to convert the response to a JSON object. We can use the `catch` function to catch any errors. Note, that we are using the `useEffect` hook to fetch the data when the component mounts. `useEffect` is used to perform side effects in a component, in otherwords, react to changes in the component through states or props.
+
+```jsx
+import { useState, useEffect } from 'react';
+
+import Post from '../components/post.component';
+
+const HomeScreen = ({ navigation }) => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((json) => setPosts(json))
+      .catch((error) => console.error(error));
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text>Home Screen</Text>
+      <FlatList 
+        data={posts}
+        renderItem={({ item }) => <Post title={item.title} body={item.body} />}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </View>
+  );
+};
+``` 
 
 # Congratulations! 🎉
 
@@ -421,3 +494,4 @@ HackPacks are built by the [TreeHacks](https://www.treehacks.com/) team and cont
 If you're interested in attending TreeHacks, you can apply on our [website](https://www.treehacks.com/) during the application period.
 
 You can follow us here on [GitHub](https://github.com/treehacks) to see all the open source work we do (we love issues, contributions, and feedback of any kind!), and on [Facebook](https://facebook.com/treehacks), [Twitter](https://twitter.com/hackwithtrees), and [Instagram](https://instagram.com/hackwithtrees) to see general updates from TreeHacks.
+```
