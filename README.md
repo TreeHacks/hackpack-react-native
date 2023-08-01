@@ -363,7 +363,7 @@ const DetailsScreen = ({ navigation }) => {
 
 ### Lists
 
-1. Now, let's create a list of items. Let's create a new component in a new `components/` folder named `list-item.component.jsx`. This will be the list item component of our app. Let's create a list item component.
+1. Now, let's create a list of items. Let's create a new component in a called `list-item.component.jsx`. This will be the list item component of our app. Let's create a list item component.
 
 ```jsx
 import { View, Text, StyleSheet } from 'react-native';
@@ -428,7 +428,7 @@ const HomeScreen = ({ navigation }) => {
 
 ### Networking
 
-1. Now, let's fetch data from a server. Let's create a new component in a new `components/` folder named `post.component.jsx`. This will be the post component of our app. Let's create a post component.
+1. Now, let's fetch data from a server. Let's create a new component called `post.component.jsx` to display a post.
 
 ```jsx
 import { View, Text, StyleSheet } from 'react-native';
