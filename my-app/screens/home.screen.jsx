@@ -1,8 +1,20 @@
-import { View, Text, StyleSheet } from 'react-native';
-import Button from '../components/button.component';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
+import Post from '../components/post.component';
+import Button from '../components/button.component';
+
 const HomeScreen = ({ navigation }) => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((json) => setPosts(json))
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
@@ -10,6 +22,11 @@ const HomeScreen = ({ navigation }) => {
         title='Go to Details'
         onPress={() => navigation.navigate('Details')}
         style={styles.button}
+      />
+      <FlatList 
+        data={posts}
+        renderItem={({ item }) => <Post title={item.title} body={item.body} />}
+        keyExtractor={(item) => item.id.toString()}
       />
       <StatusBar style='auto' />
     </View>

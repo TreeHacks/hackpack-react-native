@@ -473,10 +473,22 @@ const HomeScreen = ({ navigation }) => {
         data={posts}
         renderItem={({ item }) => <Post title={item.title} body={item.body} />}
         keyExtractor={(item) => item.id.toString()}
+        style={styles.flatlist}
+        contentContainerStyle={styles.flatlistContent}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  flatlist: {
+    // Styles
+  },
+  flatlistContent: {
+    // Styles
+  },
+});
+
 ``` 
 
 # Congratulations! 🎉
